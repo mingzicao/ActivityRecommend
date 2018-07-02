@@ -2,6 +2,7 @@ package rpc;
 
 import java.io.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.*;
@@ -36,6 +37,21 @@ public class RpcHelper {
 			} finally {
 				out.close();
 			}
+
+		}
+		public static JSONObject readJsonObject(HttpServletRequest request) {
+			StringBuilder sb = new StringBuilder();
+			try (BufferedReader reader = request.getReader()) {
+				String line = null;
+				while ((line = reader.readLine()) != null) {
+					sb.append(line);
+				}
+				return new JSONObject(sb.toString());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return new JSONObject();
 
 		}
 

@@ -6,18 +6,33 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * builder pattern :
+ * ItemBuilder is Item inner class, is also a static class, which is subject to class not instance
+ * 
+ * Item constructor is a private 
+ * 
+ * */
 public class Item {
 	private String itemId;
 	private String name;
 	private double rating;
 	private String address;
-	private Set<String> categories;
+	private Set<String> categories; // here one events can have multiple catagories;
 	private String imageUrl;
 	private String url;
 	private double distance;
 	// why constructer is  
 	private Item(ItemBuilder builder) {
-		this.itemId = builder.itemId;	
+		this.itemId = builder.itemId;
+		this.name = builder.name;
+		this.rating = builder.rating;
+		this.address = builder.address;
+		this.categories = builder.categories;
+		this.imageUrl = builder.imageUrl;
+		this.url = builder.url;
+		this.distance = builder.distance;
+
 	}
 	public String getItemId() {
 		return itemId;
@@ -52,9 +67,7 @@ public class Item {
 			obj.put("categories", new JSONArray(categories));
 			obj.put("imageUrl", imageUrl);
 			obj.put("url", url);
-			obj.put("distance", distance);
-
-			
+			obj.put("distance", distance);			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
