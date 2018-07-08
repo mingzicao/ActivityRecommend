@@ -39,7 +39,9 @@ public class SearchItem extends HttpServlet {
 		// TODO Auto-generated method stub
 		double lat = Double.parseDouble(request.getParameter("lat"));
 		double lon = Double.parseDouble(request.getParameter("lon"));
-		
+	//	System.out.println("hhhhhh");
+		System.out.println("lat = " + lat);
+		System.out.println("log = " + lon);
 		// term can be empty
 		String keyword = request.getParameter("term");
 		DBConnection connection = DBConnectionFactor.getConnection();
@@ -47,9 +49,12 @@ public class SearchItem extends HttpServlet {
 			List<Item> items = connection.searchItems(lat, lon, keyword);
 
 			JSONArray array = new JSONArray();
+			int i = 0;
 			for (Item item : items) {
+				i++;
 				array.put(item.toJSONObject());
 			}
+			System.out.println("item # is " + i);
 			RpcHelper.writeJsonArray(response, array);
 		} finally {
 			connection.close();

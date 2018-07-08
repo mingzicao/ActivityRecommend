@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import db.DBConnection;
 import db.DBConnectionFactor;
+import entity.Item;
 
 /**
  * Servlet implementation class ItemHistory
@@ -35,6 +36,26 @@ public class ItemHistory extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String userId = request.getParameter("user_id");
+		JSONArray array = new JSONArray();
+		
+		DBConnection conn = DBConnectionFactor.getConnection();
+		try {
+			Set<Item> items = conn.getFavoriteItems(userId);
+			for (Item item : items) {
+				JSONObject obj = item.toJSONObject();
+				obj.append("favorite", true);
+				
+				array.put(obj);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}
+		
+		RpcHelper.writeJsonArray(response, array);
+
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

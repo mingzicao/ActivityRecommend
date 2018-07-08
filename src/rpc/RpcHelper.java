@@ -27,10 +27,11 @@ public class RpcHelper {
 
 		// Writes a JSONArray to http response.
 		public static void writeJsonArray(HttpServletResponse response, JSONArray array) throws IOException {
-			PrintWriter out = response.getWriter();
+			PrintWriter out = response.getWriter();			
 			try {
 				response.setContentType("application/json");
 				response.addHeader("Access-Control-Allow-Origin", "*");
+				//response.
 				out.println(array);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -54,5 +55,6 @@ public class RpcHelper {
 			return new JSONObject();
 
 		}
+		
 
 }
